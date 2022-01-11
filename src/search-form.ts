@@ -1,31 +1,17 @@
 import { renderBlock } from './lib.js'
 
-export function renderSearchFormBlock() {
+export function renderSearchFormBlock(checkin?: Date, checkout?: Date) {
+  const today = new Date()
 
-  const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth();
-  const currentDay = new Date().getDate();
-  let currentDate = new Date(currentYear, currentMonth, currentDay)
-  function defaultDate() {
-    currentDate = new Date(currentYear, currentMonth, currentDay)
+  checkin = checkin ? checkin : new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2)
+  checkout = checkout ? checkout : new Date(checkin.getFullYear(), checkin.getMonth(), checkin.getDate() + 2)
+
+  const max = new Date(today.getFullYear(), today.getMonth() + 2, 1)
+
+  const formatDate = (date: Date): string => {
+    return `${date.toISOString().substring(0, 10)}`
   }
 
-  const minCheckInDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
-
-  currentDate.setDate(currentDate.getDate() + 1)
-  const defaultCheckInDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
-  defaultDate()
-
-  currentDate.setMonth(currentDate.getMonth() + 1)
-  const maxChekInDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
-  defaultDate()
-
-  currentDate.setDate(currentDate.getDate() + 3)
-  const defaultCheckOutDate = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
-  defaultDate()
-
-
-  console.log(defaultCheckOutDate, maxChekInDate)
   renderBlock(
     'search-form-block',
     `
@@ -37,19 +23,19 @@ export function renderSearchFormBlock() {
             <input id="city" type="text" disabled value="Санкт-Петербург" />
             <input type="hidden" disabled value="59.9386,30.3141" />
           </div>
-          <!--<div class="providers">
-            <label><input type="checkbox" name="provider" value="homy" checked /> Homy</label>
-            <label><input type="checkbox" name="provider" value="flat-rent" checked /> FlatRent</label>
-          </div>--!>
+<!--          &lt;!&ndash;<div class="providers">-->
+<!--            <label><input type="checkbox" name="provider" value="homy" checked /> Homy</label>-->
+<!--            <label><input type="checkbox" name="provider" value="flat-rent" checked /> FlatRent</label>-->
+<!--          </div>&#45;&#45;!>-->
         </div>
         <div class="row">
           <div>
             <label for="check-in-date">Дата заезда</label>
-            <input id="check-in-date" type="date" value="${defaultCheckInDate}" min="${minCheckInDate}" max="${maxChekInDate}" name="checkin" />
+            <input id="check-in-date" type="date" value="${formatDate(checkin)}" min="${formatDate(today)}" max="${formatDate(max)}" name="checkin" />
           </div>
           <div>
             <label for="check-out-date">Дата выезда</label>
-            <input id="check-out-date" type="date" value="${defaultCheckOutDate}" min="${minCheckInDate}" max="2025-06-30" name="checkout" />
+            <input id="check-out-date" type="date" value="${formatDate(checkout)}" min="${formatDate(today)}" max="${formatDate(max)}" name="checkout" />
           </div>
           <div>
             <label for="max-price">Макс. цена суток</label>
