@@ -15,7 +15,7 @@ let userValue: UserType = {
 };
 
 localStorage.user = JSON.stringify(userValue);
-localStorage.setItem('favoritesAmount', '3');
+localStorage.setItem('favoritesAmount', '5');
 
 function getUserData() {
   const userData: unknown = JSON.parse(localStorage.user)
@@ -59,7 +59,36 @@ function search(searchData: SearchFormData) {
   console.log(searchData)
 }
 
+interface dataType {
+  completed: boolean
+  id: number
+  title: string
+  userId: number
+}
+
 window.addEventListener('DOMContentLoaded', () => {
+
+  async function fetchAPI() {
+    return await fetch('https://jsonplaceholder.typicode.com/todos')
+      .then<dataType[]>((res) => res.json())
+  }
+
+  function getTodosByCount(count: number) {
+    console.log(count)
+  }
+
+  fetchAPI().then((res) => {
+    const completedToDos = res.filter((item) => item.completed === false)
+    const notCompletedToDos = res.filter((item) => item.completed === true)
+    console.log('Completed Todos count:')
+    getTodosByCount(completedToDos.length)
+    console.log('Not completed Todos count:')
+    getTodosByCount(notCompletedToDos.length)
+  }).catch((e) => {
+    console.log('Ошибка: ' + e)
+  })
+
+
   renderUserBlock(user.userName, user.avatarUrl, favoritesAmount)
   renderSearchFormBlock()
   renderSearchStubBlock()
