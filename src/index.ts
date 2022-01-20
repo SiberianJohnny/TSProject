@@ -2,6 +2,14 @@ import { renderSearchFormBlock } from './search-form.js'
 import { renderSearchStubBlock } from './search-results.js'
 import { renderUserBlock } from './user.js'
 import { renderToast } from './lib.js'
+import debounce from 'lodash'
+
+const debIt = debounce(function () {
+  console.log('Function debounced after 1000ms!');
+}, 1000, { 'leading': false });
+
+debIt()
+setTimeout(() => debIt.cancel(), 900)
 
 type UserType = {
   userName: string,
