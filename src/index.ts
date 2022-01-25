@@ -74,6 +74,51 @@ interface dataType {
   userId: number
 }
 
+// ---hw5---
+class PrimitiveRectangle {
+  x: number
+  y: number
+  lt: number
+  xb: number
+}
+
+export abstract class MyGraphicsPrimitive2D extends PrimitiveRectangle {
+  abstract setX(num: number): void
+
+  abstract setY(num: number): void
+}
+
+class MyAreaPrimitive2D extends MyGraphicsPrimitive2D {
+  square: number
+
+  setX(num: number): void {
+    this.x = this.x + num
+  }
+
+  setY(num: number): void {
+    this.y += num
+  }
+
+}
+
+class MyCircle extends MyAreaPrimitive2D {
+  constructor() {
+    super();
+  }
+  center: number
+  radius: number
+}
+class MyRectangle extends MyAreaPrimitive2D {
+  constructor() {
+    super();
+  }
+  x: number
+  y: number
+  lt: number
+  xb: number
+}
+// ---hw5---
+
 window.addEventListener('DOMContentLoaded', () => {
 
   async function fetchAPI() {
