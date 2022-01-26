@@ -45,7 +45,7 @@ interface SearchFormData {
 };
 
 function searchHandler() {
-  const form: HTMLFormElement = document.querySelector('form')
+  const form = document.querySelector('form') as HTMLFormElement
   const cityData = <HTMLInputElement>document.getElementById('city')
   const checkinData = <HTMLInputElement>document.getElementById('check-in-date')
   const checkoutData = <HTMLInputElement>document.getElementById('check-out-date')
@@ -76,10 +76,10 @@ interface dataType {
 
 // ---hw5---
 class PrimitiveRectangle {
-  x: number
-  y: number
-  lt: number
-  xb: number
+  x: number = 0;
+  y: number = 0;
+  lt: number = 0;
+  xb: number = 0;
 }
 
 export abstract class MyGraphicsPrimitive2D extends PrimitiveRectangle {
@@ -89,7 +89,7 @@ export abstract class MyGraphicsPrimitive2D extends PrimitiveRectangle {
 }
 
 class MyAreaPrimitive2D extends MyGraphicsPrimitive2D {
-  square: number
+  square: number | undefined;
 
   setX(num: number): void {
     this.x = this.x + num
@@ -105,17 +105,17 @@ class MyCircle extends MyAreaPrimitive2D {
   constructor() {
     super();
   }
-  center: number
-  radius: number
+  center: number | undefined;
+  radius: number | undefined;
 }
 class MyRectangle extends MyAreaPrimitive2D {
   constructor() {
     super();
   }
-  x: number
-  y: number
-  lt: number
-  xb: number
+  x: number = 0;
+  y: number = 0;
+  lt: number = 0;
+  xb: number = 0;
 }
 // ---hw5---
 

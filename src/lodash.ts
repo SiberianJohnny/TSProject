@@ -1,4 +1,4 @@
-declare module 'lodash.debounce' {
+declare module 'lodash' {
 
   export type voidFunc = () => void;
 
